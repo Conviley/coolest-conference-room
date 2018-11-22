@@ -5,12 +5,7 @@ using UnityEngine.UI;
 
 public class PhoneCamera : MonoBehaviour {
 
-    private bool camAvailable;
-
     private WebCamTexture backCam;
-
-    public RawImage background;
-    public AspectRatioFitter fit;
 
     public Renderer display;
 
@@ -18,11 +13,8 @@ public class PhoneCamera : MonoBehaviour {
 
         WebCamDevice[] devices = WebCamTexture.devices;
 
-        display.material.mainTexture = background.texture;
-
         if (devices.Length == 0) {
-            Debug.Log("No camera detected");
-            camAvailable = false;
+            Debug.Log("No device camera detected");
             return;
         }
 
@@ -35,28 +27,14 @@ public class PhoneCamera : MonoBehaviour {
         if (backCam == null) {
             Debug.Log("Unable to find back camera");
             return;
-
         }
 
         backCam.Play();
-        background.texture = backCam;
 
         display.material.mainTexture = backCam;
-        camAvailable = true;
     }
 
     private void Update() {
-        if (!camAvailable) {
-            return;
-        }
 
-        float ratio = (float)backCam.width / (float)backCam.height;
-        fit.aspectRatio = ratio;
-
-        float scaleY = backCam.videoVerticallyMirrored ? -1f : 1f;
-        background.rectTransform.localScale = new Vector3(1f, scaleY, 1f);
-
-        int orient = -backCam.videoRotationAngle;
-        background.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
     }
 }
