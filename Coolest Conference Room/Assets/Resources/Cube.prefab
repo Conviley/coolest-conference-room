@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23398795398729648}
   - component: {fileID: 65610454570473222}
   - component: {fileID: 114176581767837838}
+  - component: {fileID: 114399914209262516}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1812712203061786}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: -0.495}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -114,3 +115,16 @@ MonoBehaviour:
   yThresh: 10
   zThresh: 15
   fadeSpeed: 100
+--- !u!114 &114399914209262516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1812712203061786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a9caa2d3eace64daa98ab36fbecc3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VideoPlaneController: {fileID: 114924996352993912, guid: 268ef58a8e1d18946a5aac81646f1ebc,
+    type: 2}

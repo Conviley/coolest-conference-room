@@ -22,6 +22,6 @@ public class AppManager : MonoBehaviour {
     }
 
     public void instantiateObject() {
-        Instantiate(Resources.Load("Engine"), imageTarget.transform);
+        Instantiate(Resources.Load("Cube"), imageTarget.transform);
     }
 }
