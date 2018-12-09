@@ -12,21 +12,24 @@ public class AppManager : MonoBehaviour {
     public List<AudioClip> audioClips;
     public List<Sprite> phoneIcons;
     public Button phoneButton;
-    public GameObject callShieText;
+    public GameObject callShiaText;
 
     private bool instantiateShia = false;
+    private bool shiaOut = false;
     private bool calling = false;
+    private GameObject shia;
 
-    private void Start () {
+    private void Start() {
         imageTarget = GameObject.Find("ImageTarget");
         audioSource = GetComponent<AudioSource>();
-	}
+    }
 
     private void Update() {
         if (instantiateShia && !audioSource.isPlaying) {
-            Instantiate(Resources.Load("VideoPlane"), imageTarget.transform);
+            shia = (GameObject)Instantiate(Resources.Load("VideoPlane"), imageTarget.transform);
             instantiateShia = false;
-            callShieText.active = false;    
+            shiaOut = true;
+            callShiaText.SetActive(false);
         }
     }
 
@@ -43,10 +46,11 @@ public class AppManager : MonoBehaviour {
     private void HangUp() {
         audioSource.Stop();
         audioSource.PlayOneShot(audioSource.clip);
-        Destroy(GameObject.Find("VideoPlane"));
         phoneButton.GetComponent<Image>().sprite = phoneIcons[1];
-        callShieText.active = false;
+        callShiaText.SetActive(false);
         instantiateShia = false;
+        Destroy(shia);
+        shiaOut = false;
     }
 
     public void instantiateObject() {
@@ -56,7 +60,16 @@ public class AppManager : MonoBehaviour {
     private void CallShia() {
         audioSource.PlayOneShot(audioClips[0]);
         instantiateShia = true;
-        callShieText.active = true;
+        callShiaText.SetActive(true);
         phoneButton.GetComponent<Image>().sprite = phoneIcons[0];
     }
+
+    public GameObject GetVideoPlane() {
+        return shia;
+    }
+
+    public bool isShiaOut() {
+        return shiaOut;
+    }
+
 }
