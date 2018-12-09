@@ -3,7 +3,7 @@ using UnityEngine;
 // This script will rotate and scale the GameObject based on finger gestures
 public class SimpleRotateScale : MonoBehaviour
 {
-    public VideoPlaneController VideoPlaneController;
+    public ArObject VideoPlaneController;
 
 	protected virtual void LateUpdate()
 	{
