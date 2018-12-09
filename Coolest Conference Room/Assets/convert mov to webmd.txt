@@ -1,0 +1,1 @@
+ffmpeg -i Bunny_1.mov -c:v libvpx -pix_fmt yuva420p -b:v 1M -auto-alt-ref 0 -metadata:s:v:0 alpha_mode="1" -c:a libvorbis Bunny_1.webm
