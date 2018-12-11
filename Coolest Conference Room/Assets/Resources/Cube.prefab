@@ -115,6 +115,7 @@ MonoBehaviour:
   yThresh: 10
   zThresh: 15
   fadeSpeed: 400
+  lookTowardsCamera: 1
 --- !u!114 &114399914209262516
 MonoBehaviour:
   m_ObjectHideFlags: 1

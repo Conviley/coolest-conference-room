@@ -11,6 +11,7 @@ public class ArObject : MonoBehaviour {
     public float yThresh = 10f;
     public float zThresh = 15f;
     public float fadeSpeed = 400;
+    public bool lookTowardsCamera = false;
 
     private float prevTouchX = 0;
     private float prevTouchY = 0;
@@ -29,6 +30,11 @@ public class ArObject : MonoBehaviour {
         if (selected) { 
             GetComponent<Renderer>().material.color = new Color32(0, (byte)Mathf.PingPong(Time.time * fadeSpeed, 255), 0, 255);
             TranslateAndScale();
+        }
+
+        if (lookTowardsCamera) {
+            transform.LookAt(-Camera.main.transform.position);
+
         }
     }
 
