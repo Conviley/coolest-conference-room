@@ -58,7 +58,7 @@ public class AppManager : MonoBehaviour {
     }
 
     public void InstantiateObject() {
-        Instantiate(Resources.Load("Cube"), imageTarget.transform);
+        Instantiate(Resources.Load("Car"), imageTarget.transform);
     }
 
     private void CallShia() {

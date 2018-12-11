@@ -12,14 +12,28 @@ public class ArObject : MonoBehaviour {
     public float zThresh = 15f;
     public float fadeSpeed = 400;
     public bool lookTowardsCamera = false;
+    public bool comprisedOfMany = false;
+
+    private GameObject imageTarget;
+    private List<Color32> originalColors = new List<Color32>();
+    private Color32 originalColor;
 
     private float prevTouchX = 0;
     private float prevTouchY = 0;
-
     private bool selected = false;
-    private GameObject imageTarget;
+
+    
    
     void Start () {
+
+        if (comprisedOfMany) {
+            foreach (Transform child in transform) {
+                originalColors.Add(child.GetComponent<Renderer>().material.color);
+            }
+        } else {
+            originalColor = GetComponent<Renderer>().material.color;
+        }
+
         imageTarget = GameObject.Find("ImageTarget");
         Vector3 imageTargetPosition = imageTarget.transform.position;
         Vector3 spawnPositon = new Vector3(imageTargetPosition.x, transform.position.y, imageTargetPosition.z);
@@ -27,8 +41,15 @@ public class ArObject : MonoBehaviour {
     }
 
     void Update() {
-        if (selected) { 
-            GetComponent<Renderer>().material.color = new Color32(0, (byte)Mathf.PingPong(Time.time * fadeSpeed, 255), 0, 255);
+        if (selected) {
+            if (comprisedOfMany) {
+                foreach (Transform child in transform) {
+                    child.GetComponent<Renderer>().material.color = new Color32(0, (byte)Mathf.PingPong(Time.time * fadeSpeed, 255), 0, 255);
+                }
+            } else {
+                GetComponent<Renderer>().material.color = new Color32(0, (byte)Mathf.PingPong(Time.time * fadeSpeed, 255), 0, 255);
+            }
+            
             TranslateAndScale();
         }
 
@@ -90,7 +111,16 @@ public class ArObject : MonoBehaviour {
             selected = true;
         } else {
             selected = false;
-            GetComponent<Renderer>().material.color = new Color32(255, 255, 255, 255);
+            int i = 0;
+            if (comprisedOfMany) {
+                foreach (Transform child in transform) {
+                    child.GetComponent<Renderer>().material.color = originalColors[i];
+                    i++;
+                }
+            } else {
+                GetComponent<Renderer>().material.color = new Color32(255, 255, 255, 255);
+            }
+            
         }
     }
 
