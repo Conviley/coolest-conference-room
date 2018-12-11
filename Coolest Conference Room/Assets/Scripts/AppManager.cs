@@ -7,18 +7,19 @@ using UnityEngine.Video;
 public class AppManager : MonoBehaviour {
 
     public GameObject initialUi;
-
-    private GameObject imageTarget;
-    private AudioSource audioSource;
     public List<AudioClip> audioClips;
     public List<Sprite> phoneIcons;
     public Button phoneButton;
     public GameObject callShiaText;
 
-    private bool instantiateShia = false;
-    private bool calling = false;
+    private GameObject imageTarget;
+    private AudioSource audioSource;
+
     private GameObject videoPlane;
     private VideoPlayer video;
+
+    private bool instantiateShia = false;
+    private bool calling = false;
 
     private void Start() {
         imageTarget = GameObject.Find("ImageTarget");
@@ -54,6 +55,7 @@ public class AppManager : MonoBehaviour {
         callShiaText.SetActive(false);
         instantiateShia = false;
         videoPlane.SetActive(false);
+        videoPlane.GetComponent<ArObject>().reset();
         video.Stop();
     }
 

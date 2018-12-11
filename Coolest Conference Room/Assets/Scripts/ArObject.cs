@@ -17,14 +17,20 @@ public class ArObject : MonoBehaviour {
     private GameObject imageTarget;
     private List<Color32> originalColors = new List<Color32>();
     private Color32 originalColor;
+    private Transform originalTransform;
 
     private float prevTouchX = 0;
     private float prevTouchY = 0;
     private bool selected = false;
 
-    
+    private Vector3 originalPosition;
+    private Vector3 originalScale;
+    private Quaternion originalRotation;
    
     void Start () {
+        originalPosition = transform.position;
+        originalRotation = transform.rotation;
+        originalScale = transform.localScale;
 
         if (comprisedOfMany) {
             foreach (Transform child in transform) {
@@ -41,6 +47,19 @@ public class ArObject : MonoBehaviour {
     }
 
     void Update() {
+        if (comprisedOfMany) {
+            if (transform.position.y < -.5f*transform.localScale.x * 100) {
+                foreach (Transform child in transform) {
+                    child.GetComponent<Renderer>().enabled = false;
+                }
+            } else {
+                foreach (Transform child in transform) {
+                    child.GetComponent<Renderer>().enabled = true;
+                }
+                
+            }
+        }
+
         if (selected) {
             if (comprisedOfMany) {
                 foreach (Transform child in transform) {
@@ -111,20 +130,31 @@ public class ArObject : MonoBehaviour {
             selected = true;
         } else {
             selected = false;
-            int i = 0;
-            if (comprisedOfMany) {
-                foreach (Transform child in transform) {
-                    child.GetComponent<Renderer>().material.color = originalColors[i];
-                    i++;
-                }
-            } else {
-                GetComponent<Renderer>().material.color = new Color32(255, 255, 255, 255);
+            resetMaterial();
+        }
+    }
+
+    private void resetMaterial() {
+        int i = 0;
+        if (comprisedOfMany) {
+            foreach (Transform child in transform) {
+                child.GetComponent<Renderer>().material.color = originalColors[i];
+                i++;
             }
-            
+        } else {
+            GetComponent<Renderer>().material.color = new Color32(255, 255, 255, 255);
         }
     }
 
     public bool isSelected() {
         return selected;
+    }
+
+    public void reset() {
+        transform.position = originalPosition;
+        transform.rotation = originalRotation;
+        transform.localScale = originalScale;
+        selected = false;
+        resetMaterial();
     }
 }
