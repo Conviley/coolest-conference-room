@@ -145,7 +145,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     // setup the videoPlayer object
     private VideoPlayer videoPlayer;
     private AppManager appManager;
-
+    private bool foundVideoPlayer = false;
     #endregion // PRIVATE_MEMBER_VARIABLES
 
     #region UNTIY_MONOBEHAVIOUR_METHODS
@@ -157,10 +157,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
         // add the following 4 lines to get the reference to the video player component of the plane that the video is attached to
         // IMPORTANT: set "Video_plane" to the name of the plane game object you attached your video to
-        /*GameObject video = GameObject.Find("VideoPlane(Clone)");
+        GameObject video = GameObject.Find("VideoPlane");
         videoPlayer = video.GetComponent<VideoPlayer>();
         videoPlayer.Play();
-        videoPlayer.Pause();*/
+        videoPlayer.Pause();
         // see the VideoPlayer Scripting API for more ideas on which functions you can use in your code
         // for example changing the playback speed or jumping to a speicific point in time:
         // https://docs.unity3d.com/ScriptReference/Video.VideoPlayer.html
@@ -168,19 +168,20 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         appManager = GameObject.Find("AppManager").GetComponent<AppManager>();
     }
 
-    private void Update() {
-        if (appManager.GetVideoPlane() != null && !appManager.isShiaOut()) {
+    /*private void Update() {
+        if (appManager.GetVideoPlane() != null && !foundVideoPlayer) {
             GameObject video = GameObject.Find("VideoPlane(Clone)");
             videoPlayer = video.GetComponent<VideoPlayer>();
             videoPlayer.Play();
             videoPlayer.Pause();
+            foundVideoPlayer = true;
             if (video == null) {
                 Debug.Log("VIDEO IS NULL");
             } else {
                 Debug.Log("VIDEO IS NOT NULL");
             }
         }
-    }
+    }*/
 
     #endregion // UNTIY_MONOBEHAVIOUR_METHODS
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class AppManager : MonoBehaviour {
 
@@ -15,20 +16,23 @@ public class AppManager : MonoBehaviour {
     public GameObject callShiaText;
 
     private bool instantiateShia = false;
-    private bool shiaOut = false;
     private bool calling = false;
-    private GameObject shia;
+    private GameObject videoPlane;
+    private VideoPlayer video;
 
     private void Start() {
         imageTarget = GameObject.Find("ImageTarget");
         audioSource = GetComponent<AudioSource>();
+        videoPlane = GameObject.Find("VideoPlane");
+        video = videoPlane.GetComponent<VideoPlayer>();
+        videoPlane.SetActive(false);
     }
 
     private void Update() {
         if (instantiateShia && !audioSource.isPlaying) {
-            shia = (GameObject)Instantiate(Resources.Load("VideoPlane"), imageTarget.transform);
+            videoPlane.SetActive(true);
+            video.Play();
             instantiateShia = false;
-            shiaOut = true;
             callShiaText.SetActive(false);
         }
     }
@@ -49,11 +53,11 @@ public class AppManager : MonoBehaviour {
         phoneButton.GetComponent<Image>().sprite = phoneIcons[1];
         callShiaText.SetActive(false);
         instantiateShia = false;
-        Destroy(shia);
-        shiaOut = false;
+        videoPlane.SetActive(false);
+        video.Stop();
     }
 
-    public void instantiateObject() {
+    public void InstantiateObject() {
         Instantiate(Resources.Load("Cube"), imageTarget.transform);
     }
 
@@ -63,13 +67,4 @@ public class AppManager : MonoBehaviour {
         callShiaText.SetActive(true);
         phoneButton.GetComponent<Image>().sprite = phoneIcons[0];
     }
-
-    public GameObject GetVideoPlane() {
-        return shia;
-    }
-
-    public bool isShiaOut() {
-        return shiaOut;
-    }
-
 }
