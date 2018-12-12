@@ -22,6 +22,7 @@ public class ArObject : MonoBehaviour {
     private float prevTouchX = 0;
     private float prevTouchY = 0;
     private bool selected = false;
+    private bool scalable = false;
 
     private Vector3 originalPosition;
     private Vector3 originalScale;
@@ -126,11 +127,18 @@ public class ArObject : MonoBehaviour {
 
     private void OnMouseDown() {
         Debug.Log("CLICKED");
-        if (!selected) {
-            selected = true;
+        if (Input.touchCount == 2) {
+            scalable = true;
         } else {
-            selected = false;
-            resetMaterial();
+            scalable = false;
+            if (!selected) {
+                selected = true;
+
+            } else {
+                selected = false;
+                scalable = false;
+                resetMaterial();
+            }
         }
     }
 
@@ -146,8 +154,8 @@ public class ArObject : MonoBehaviour {
         }
     }
 
-    public bool isSelected() {
-        return selected;
+    public bool isScalable() {
+        return scalable;
     }
 
     public void reset() {

@@ -11,7 +11,7 @@ public class SimpleRotateScale : MonoBehaviour
 
     protected virtual void LateUpdate()
 	{
-        if (VideoPlaneController.isSelected()) {
+        if (VideoPlaneController.isScalable()) {
             // This will rotate the current transform based on a multi finger twist gesture
             Lean.LeanTouch.RotateObject(transform, Lean.LeanTouch.TwistDegrees);
 
